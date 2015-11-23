@@ -1,5 +1,7 @@
 <p id="notice"><%= notice %></p>
 
+<% if current_user -%>Welcome, <%= current_user.name %><% end -%>
+
 <h1>Listing Posts</h1>
 
 <table>

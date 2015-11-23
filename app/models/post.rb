@@ -8,4 +8,6 @@ class Post < ActiveRecord::Base
             },
             uniqueness: { case_sensitive: false, message: 'should be unique' }
   validates :body, presence: true
+
+  belongs_to :user
 end
