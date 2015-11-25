@@ -17,7 +17,7 @@ end
 
 users = User.order(:created_at).take(6)
 20.times do
-  content = Faker::Lorem.sentences(5)
+  content = Faker::Lorem.paragraph(5)
   title = Faker::Lorem.sentence(rand(3..6))
   tags = Faker::Lorem.words(rand(1..3))
 
