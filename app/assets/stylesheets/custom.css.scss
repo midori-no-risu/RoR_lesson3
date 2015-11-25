@@ -208,6 +208,20 @@ input {
     margin-top: 5em;
     padding-top: 0;
   }
+  .title a{
+    display: block;
+    margin-left: 60px;
+    color: #0F4B26;
+    font-size: 16px;
+
+    &:hover {
+      background-color: transparent;
+    }
+  }
+  .tags {
+    color: #1F8984;
+    font-size: 11px;
+  }
   .body {
     display: block;
     margin-left: 60px;

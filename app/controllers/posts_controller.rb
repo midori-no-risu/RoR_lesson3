@@ -1,7 +1,7 @@
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
-  before_action :logged_in_user, only: [:create, :destroy]
-  before_action :correct_user,   only: :destroy
+  before_action :logged_in_user, only: [:create, :edit, :destroy]
+  before_action :correct_user,   only: [:destroy, :edit]
 
   # GET /posts/1
   # GET /posts/1.json
@@ -15,13 +15,14 @@ class PostsController < ApplicationController
 
   # GET /posts/1/edit
   def edit
+    @post = Post.find(params[:id])
   end
 
   def create
     @post = current_user.posts.build(post_params)
     if @post.save
       flash[:success] = 'New post created!'
-      redirect_to root_url
+      redirect_to @post
     else
       render 'static_pages/home'
     end
