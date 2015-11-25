@@ -17,8 +17,8 @@ end
 
 users = User.order(:created_at).take(6)
 20.times do
-  content = Faker::Lorem.sentence(5)
-  title = Faker::Lorem.sentence(1)
+  content = Faker::Lorem.sentences(5)
+  title = Faker::Lorem.sentence(rand(3..6))
   tags = Faker::Lorem.words(rand(1..3))
 
   users.each { |user| user.posts.create!(body: content, title: title, tags: tags) }
