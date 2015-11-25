@@ -1,57 +1,73 @@
 class UsersController < ApplicationController
+  before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
+  before_action :correct_user,   only: [:edit, :update]
+  before_action :admin_user,     only: :destroy
+
   def new
     @user = User.new
   end
   def create
-    @user = User.new(params.require(:user).permit(:name, :email, :password, :password_confirmation))
+    @user = User.new(user_params)
     if @user.save
       log_in @user
-      flash.now[:success] = 'User has been successfully registered!'
+      flash[:success] = 'You have been successfully registered!'
       redirect_to @user
     else
       render 'new'
+      #   redirect_to :back
     end
-    # @user = User.new(params.require(:user).permit(:name, :email, :password, :password_confirmation))
-    # if @user.save
-    #   format.html { redirect_to @user, notice: 'User was successfully registered.' }
-    #   format.json { render :show, status: :ok, location: @user }
-    #   # flash.now[:success] = 'User has been successfully registered!'
-    #   session[:user_id] = @user.id
-    #   # redirect_to post_path
-    # else
-    #   redirect_to :back
-    # end
   end
 
   def update
-    respond_to do |format|
-      if @user.update(params.require(:user).permit(:name, :email))
-        format.html { redirect_to @user, notice: 'User was successfully updated.' }
-        format.json { render :show, status: :ok, location: @user }
-      else
-        format.html { render :edit }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
-      end
+    @user = User.find(params[:id])
+    if @user.update_attributes(user_params)
+      flash[:success] = 'Profile updated'
+      redirect_to @user
+    else
+      render 'edit'
     end
   end
 
   def show
     @user = User.find(params[:id])
+    @posts = @user.posts.paginate(page: params[:page], :per_page => 5)
   end
 
   def index
-    @users = User.all
+    @users = User.paginate(page: params[:page], :per_page => 5)
   end
 
   def edit
+    @user = User.find(params[:id])
   end
 
   def destroy
-    @user.destroy
-    respond_to do |format|
-      format.html { redirect_to users_url, notice: 'User was successfully destroyed.' }
-      format.json { head :no_content }
+    User.find(params[:id]).destroy
+    flash[:success] = 'User was successfully deleted.'
+    redirect_to users_url
+  end
+
+  private
+
+   def user_params
+     params.require(:user).permit(:name, :email, :password, :password_confirmation, :image)
+   end
+
+  def logged_in_user
+    unless logged_in?
+      store_location
+      flash[:danger] = 'Please log in.'
+      redirect_to login_url
     end
+  end
+
+  def correct_user
+    @user = User.find(params[:id])
+    redirect_to(root_url) unless current_user?(@user)
+  end
+
+  def admin_user
+    redirect_to(root_url) unless current_user.admin?
   end
 
 end

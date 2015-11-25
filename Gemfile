@@ -4,6 +4,14 @@ ruby '2.2.3'
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.2.4'
 gem 'bootstrap-sass',       '3.3.5.1'
+gem 'faker',                '1.5.0'
+
+gem 'will_paginate',           '3.0.7'
+gem 'bootstrap-will_paginate', '0.0.10'
+
+gem 'carrierwave',             '0.10.0'
+gem 'mini_magick',             '4.3.6'
+gem 'fog',                     '1.36.0'
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 5.0'

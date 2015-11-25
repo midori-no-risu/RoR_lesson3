@@ -1,0 +1,4 @@
+<span class="avatar"><%= image_tag current_user.image.url(:thumbnail), :width => 50, :height => 50 %></span>
+<h1><%= current_user.name %></h1>
+<span><%= link_to 'View my profile', current_user %></span>
+<span><%= pluralize(current_user.posts.count, "post") %></span>

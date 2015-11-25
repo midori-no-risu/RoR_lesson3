@@ -4,11 +4,20 @@
   <aside class="col-md-4">
     <section class="user_info">
       <h1>
-        <%= gravatar_for @user %>
+        <span class="avatar"><%= image_tag @user.image.url(:standard), :width => 100, :height => 100 %></span>
         <%= @user.name.capitalize %>
       </h1>
     </section>
   </aside>
+  <div class="col-md-8">
+    <% if @user.posts.any? %>
+        <h3>Posts (<%= @user.posts.count %>)</h3>
+        <ul class="posts">
+          <%= render @posts %>
+        </ul>
+        <%= will_paginate @posts %>
+    <% end %>
+  </div>
 </div>
 <p>
   <strong>Name:</strong>

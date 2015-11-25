@@ -5,9 +5,10 @@ class Post < ActiveRecord::Base
                 in: 5..100,
                 too_short: "must be at least %{count} symbols long",
                 too_long: "must be at most %{count} symbols long"
-            },
-            uniqueness: { case_sensitive: false, message: 'should be unique' }
+            }
+            # uniqueness: { case_sensitive: false, message: 'should be unique' }
   validates :body, presence: true
 
   belongs_to :user
+  default_scope -> { order(created_at: :desc) }
 end

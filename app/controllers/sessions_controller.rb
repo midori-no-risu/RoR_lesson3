@@ -6,21 +6,11 @@ class SessionsController < ApplicationController
     user = User.find_by(email: params[:session][:email].downcase)
     if user && user.authenticate(params[:session][:password])
       log_in user
-      redirect_to user
+      redirect_back_or user
     else
       flash.now[:danger] = 'Invalid email/password'
       render 'new'
     end
-    # user = User.find_by(email: params[:session][:email].downcase)
-    # if user && user.authenticate(params[:session][:password])
-    #   puts YAML::dump(user)
-    #   puts YAML::dump(session[:user_id])
-    #   log_in user
-    #   redirect_to posts_url
-    # else
-    #   flash.now[:danger] = 'Invalid email/password'
-    #   redirect_to :back
-    # end
   end
 
   def destroy
